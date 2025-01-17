@@ -1,3 +1,28 @@
+"""
+Scraper de Notícies Pitch&Putt
+------------------------------
+
+Aquest programa permet extreure notícies de la secció Sèniors de la web de la Federació Catalana de Pitch and Putt.
+
+Funcionalitats principals:
+- Selecció d'interval de dates per filtrar les notícies
+- Extracció automàtica de títols, dates, descripcions i enllaços
+- Visualització de resultats en format taula i llista d'enllaços
+- Exportació de dades a format CSV
+- Manteniment dels últims resultats en memòria
+
+Requeriments:
+- streamlit: per la interfície gràfica
+- requests: per fer peticions HTTP
+- beautifulsoup4: per parsejar HTML
+- pandas: per gestionar les dades
+- urllib3: per gestionar connexions HTTP
+
+Autor: Antoni Garcia
+Data: 17/01/2025
+Versió: 1.0
+"""
+
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
@@ -11,6 +36,17 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 warnings.filterwarnings('ignore')
 
 def scrape_pitch_cat(data_inici, data_fi):
+    """
+    Extreu les notícies de la web de Pitch&Putt dins de l'interval de dates especificat.
+    
+    Args:
+        data_inici (date): Data d'inici per filtrar les notícies
+        data_fi (date): Data final per filtrar les notícies
+        
+    Returns:
+        DataFrame: DataFrame amb les columnes 'Data', 'Títol', 'Descripció' i 'Enllaç'
+                  Retorna None si hi ha algun error
+    """
     url = "http://pitch.cat/noticies/index.php?cat=70"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
@@ -91,6 +127,15 @@ def scrape_pitch_cat(data_inici, data_fi):
         return None
 
 def main():
+    """
+    Funció principal que gestiona la interfície d'usuari i el flux del programa.
+    
+    Característiques:
+    - Interfície gràfica amb Streamlit
+    - Selectors de dates
+    - Visualització de resultats en pestanyes
+    - Gestió de la sessió per mantenir resultats anteriors
+    """
     st.title("Scraper de Notícies Pitch&Putt")
     
     # Afegir informació sobre la seguretat
