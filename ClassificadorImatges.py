@@ -146,27 +146,27 @@ if st.button("🗑️ Netejar totes les categories"):
         st.error(f"Error en netejar les categories: {str(e)}")
 
 def save_images(uploaded_files, category):
-    """Save multiple images to the selected category folder"""
+    """Desa múltiples imatges a la carpeta de categoria seleccionada"""
     saved_files = []
     category_path = st.session_state.base_dir / category
     
     for uploaded_file in uploaded_files:
         if uploaded_file is not None:
             try:
-                # Create a temporary file to save the upload
+                # Crea un fitxer temporal per desar la càrrega
                 with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmp_file:
                     tmp_file.write(uploaded_file.getvalue())
                 
-                # Open and save the image
+                # Obre i desa la imatge
                 image = Image.open(tmp_file.name)
                 save_path = category_path / uploaded_file.name
-                image.save(str(save_path))  # Convert Path to string for PIL
+                image.save(str(save_path))  # Converteix Path a string per PIL
                 saved_files.append(str(save_path))
                 
-                # Remove temporary file
+                # Elimina el fitxer temporal
                 Path(tmp_file.name).unlink()
             except Exception as e:
-                st.error(f"Error saving {uploaded_file.name}: {str(e)}")
+                st.error(f"Error desant {uploaded_file.name}: {str(e)}")
                 continue
                 
     return saved_files
