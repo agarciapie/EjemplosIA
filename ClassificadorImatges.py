@@ -187,21 +187,21 @@ def main():
     if uploaded_files:
         st.write(f"Has seleccionat {len(uploaded_files)} imatges")
         
-        # Display selected images in grid with updated parameter
+        # Mostra les imatges seleccionades en una graella amb el paràmetre actualitzat
         cols = st.columns(3)
         for idx, uploaded_file in enumerate(uploaded_files):
             col = cols[idx % 3]
             with col:
                 st.image(uploaded_file, caption=uploaded_file.name, use_container_width=True)
         
-        # Category selection
+        # Selecció de categoria
         category = st.selectbox("Selecciona la categoria", CATEGORIES)
         
         if st.button("Classificar Imatges"):
             saved_files = save_images(uploaded_files, category)
-            st.success(f"{len(saved_files)} imatges guardades a la categoria {category}")
+            st.success(f"{len(saved_files)} imatges desades a la categoria {category}")
             
-            # Show saved images paths
+            # Mostra les rutes de les imatges desades
             with st.expander("Veure detalls"):
                 for file in saved_files:
                     st.write(file)
